@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class DocHelperTest {
 
-    public static final String ATT_WATERMARK_MODE = "custom";
+    public static final String ATT_WATERMARK_MODE = "watermarkMode";
 
     public static final String ATT_WATERMARK_MODE_CUSTOM = "custom";
 
