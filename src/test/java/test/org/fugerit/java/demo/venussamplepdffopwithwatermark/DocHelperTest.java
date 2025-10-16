@@ -36,12 +36,11 @@ import lombok.AllArgsConstructor;
 @Slf4j
 class DocHelperTest {
 
-    @Test
-    void testDocProcess() throws Exception {
+    private File testWorker( String watermarkMode  ) throws Exception {
         String chainId = "document";
         // handler id
         String handlerId = DocConfig.TYPE_PDF;
-        File outputFile = new File( "target/", String.format( "%s.%s", chainId, handlerId ) );
+        File outputFile = new File( "target/", String.format( "%s-watermark-%s.%s", chainId, watermarkMode, handlerId ) );
         outputFile.delete();
         try (FileOutputStream baos = new FileOutputStream(outputFile)) {
             // creates the doc helper
@@ -52,9 +51,16 @@ class DocHelperTest {
 
             // output generation
             docHelper.getDocProcessConfig().fullProcess(chainId,
-                    DocProcessContext.newContext("listPeople", listPeople), handlerId, baos);
-            Assertions.assertNotEquals(0, outputFile.length() );
+                    DocProcessContext.newContext("listPeople", listPeople)
+                            .withAtt( "watermarkMode", watermarkMode ), handlerId, baos);
+            return outputFile;
         }
+    }
+
+    @Test
+    void testDocProcessTemplateWatermark() throws Exception {
+        File output = this.testWorker( "template" );
+        Assertions.assertNotEquals( 0, output.length() );
     }
 
 }

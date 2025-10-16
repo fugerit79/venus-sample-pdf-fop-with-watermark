@@ -30,9 +30,11 @@
         <info name="excel-table-id">data-table=print</info>
         <!-- property specific for csv -->
         <info name="csv-table-id">data-table</info>
+        <#if (watermarkMode!'') == 'template'>
         <header-ext>
             <image url="jpg" scaling="300" align="center" alt="Watermark" base64="${imageBase64CLFun('venus-sample-pdf-fop-with-watermark/img/watermark.jpg')}" />
         </header-ext>
+        </#if>
         <footer-ext>
             <para align="right">${r"${currentPage}"} / ${r"${pageCount}"}</para>
         </footer-ext>
